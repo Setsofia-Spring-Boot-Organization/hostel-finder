@@ -1,7 +1,7 @@
 package com.backend.hostel_finder.core.services;
 
-import com.backend.hostel_finder.users.admin.AdminRepository;
-import com.backend.hostel_finder.users.student.StudentRepository;
+import com.backend.hostel_finder.features.users.admin.AdminRepository;
+import com.backend.hostel_finder.features.users.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,7 @@
-package com.backend.hostel_finder.users.student;
+package com.backend.hostel_finder.features.users.student;
 
 import com.backend.hostel_finder.core.Response;
-import com.backend.hostel_finder.users.student.dtos.NewStudentDto;
+import com.backend.hostel_finder.features.users.student.dtos.NewStudentDto;
 import org.springframework.http.ResponseEntity;
 
 public interface StudentService {

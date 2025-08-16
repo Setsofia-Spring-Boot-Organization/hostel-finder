@@ -1,4 +1,4 @@
-package com.backend.hostel_finder.users.admin.dtos;
+package com.backend.hostel_finder.features.users.admin.dtos;
 
 public record NewAdminDto(
 

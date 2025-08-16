@@ -1,4 +1,4 @@
-package com.backend.hostel_finder.users.admin;
+package com.backend.hostel_finder.features.users.admin;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

@@ -1,4 +1,4 @@
-package com.backend.hostel_finder.users.student;
+package com.backend.hostel_finder.features.users.student;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
