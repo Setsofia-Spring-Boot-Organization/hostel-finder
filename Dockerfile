@@ -1,14 +1,11 @@
-#build the app
-FROM maven:3.8.1-openjdk-17 AS BUILD
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-#create the final image
-FROM openjdk:17.0.1-slim
+# Final runtime image
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=BUILD /app/target/hostel-finder-0.0.1-SNAPSHOT.jar hostel-finder.jar
 
-#set the port
-EXPOSE 8081
+COPY --from=build /app/target/*.jar hostel-finder.jar
 ENTRYPOINT ["java", "-jar", "hostel-finder.jar"]
