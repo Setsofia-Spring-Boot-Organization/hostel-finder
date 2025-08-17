@@ -1,4 +1,4 @@
-package com.backend.hostel_finder.users.student.dtos;
+package com.backend.hostel_finder.features.users.student.dtos;
 
 public record NewStudentDto(
 

@@ -1,7 +1,7 @@
-package com.backend.hostel_finder.users.admin;
+package com.backend.hostel_finder.features.users.admin;
 
 import com.backend.hostel_finder.core.Response;
-import com.backend.hostel_finder.users.admin.dtos.NewAdminDto;
+import com.backend.hostel_finder.features.users.admin.dtos.NewAdminDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

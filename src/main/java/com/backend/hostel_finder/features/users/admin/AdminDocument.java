@@ -1,6 +1,6 @@
-package com.backend.hostel_finder.users.admin;
+package com.backend.hostel_finder.features.users.admin;
 
-import com.backend.hostel_finder.users.roles.UserRoles;
+import com.backend.hostel_finder.features.users.roles.UserRoles;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,6 +1,6 @@
-package com.backend.hostel_finder.users.student;
+package com.backend.hostel_finder.features.users.student;
 
-import com.backend.hostel_finder.users.roles.UserRoles;
+import com.backend.hostel_finder.features.users.roles.UserRoles;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

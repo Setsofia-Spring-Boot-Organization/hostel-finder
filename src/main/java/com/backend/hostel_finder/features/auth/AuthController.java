@@ -1,10 +1,10 @@
-package com.backend.hostel_finder.auth;
+package com.backend.hostel_finder.features.auth;
 
-import com.backend.hostel_finder.auth.dtos.LoginDto;
+import com.backend.hostel_finder.features.auth.dtos.LoginDto;
 import com.backend.hostel_finder.core.Response;
 import com.backend.hostel_finder.security.JwtUtil;
-import com.backend.hostel_finder.users.admin.AdminRepository;
-import com.backend.hostel_finder.users.student.StudentRepository;
+import com.backend.hostel_finder.features.users.admin.AdminRepository;
+import com.backend.hostel_finder.features.users.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

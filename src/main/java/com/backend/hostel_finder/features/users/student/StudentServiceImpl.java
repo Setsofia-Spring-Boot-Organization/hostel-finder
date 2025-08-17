@@ -1,8 +1,8 @@
-package com.backend.hostel_finder.users.student;
+package com.backend.hostel_finder.features.users.student;
 
 import com.backend.hostel_finder.core.Response;
-import com.backend.hostel_finder.users.roles.UserRoles;
-import com.backend.hostel_finder.users.student.dtos.NewStudentDto;
+import com.backend.hostel_finder.features.users.roles.UserRoles;
+import com.backend.hostel_finder.features.users.student.dtos.NewStudentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
