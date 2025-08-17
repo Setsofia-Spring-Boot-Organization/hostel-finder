@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("hf/api/auth")
+@RequestMapping("hf/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
