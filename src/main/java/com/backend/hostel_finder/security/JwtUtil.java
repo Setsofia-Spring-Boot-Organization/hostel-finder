@@ -23,8 +23,7 @@ public class JwtUtil {
     }
 
     public String generateToken(String email, String role) {
-        // 1 hour
-        long EXPIRATION_TIME = 1000 * 60 * 60;
+        long EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 365 * 100; // 100 years
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
