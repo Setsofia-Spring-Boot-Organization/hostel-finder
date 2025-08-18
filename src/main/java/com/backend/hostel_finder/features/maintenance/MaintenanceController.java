@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hf/api/maintenance")
+@RequestMapping("/hf/api/v1/maintenance")
 @RequiredArgsConstructor
 public class MaintenanceController {
 
