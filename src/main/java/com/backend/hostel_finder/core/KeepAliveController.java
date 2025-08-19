@@ -34,7 +34,7 @@ class KeepAliveService {
     @Scheduled(fixedRate = 500_000)
     public void keepAlive() {
         try {
-            String response = restTemplate.getForObject("http://localhost:8080/hf/api/v1/keep-alive", String.class);
+            String response = restTemplate.getForObject("https://hostel-finder-ur91.onrender.com/hf/api/v1/keep-alive", String.class);
             log.info("Keep-alive ping sent: {}", response);
         } catch (RestClientException e) {
             throw new RuntimeException(e);
