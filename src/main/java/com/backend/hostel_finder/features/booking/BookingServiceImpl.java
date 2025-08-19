@@ -4,13 +4,14 @@ import com.backend.hostel_finder.features.booking.daos.BookingResponse;
 import com.backend.hostel_finder.features.booking.dtos.CreateBookingRequest;
 import com.backend.hostel_finder.features.rooms.RoomDocument;
 import com.backend.hostel_finder.features.rooms.RoomRepository;
+import com.backend.hostel_finder.features.users.student.StudentDocument;
+import com.backend.hostel_finder.features.users.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,46 +21,66 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final RoomRepository roomRepository;
+    private final StudentRepository studentRepository;
 
     @Override
     public BookingResponse createBooking(CreateBookingRequest request) {
         log.info("Creating booking for student: {}", request.getStudentId());
 
         // Validate dates
-        if (LocalDateTime.parse(request.getCheckOutDate()).isBefore(LocalDateTime.parse(request.getCheckInDate()))) {
+        LocalDateTime checkInDate = LocalDateTime.parse(request.getCheckInDate());
+        LocalDateTime checkOutDate = LocalDateTime.parse(request.getCheckOutDate());
+
+        if (checkOutDate.isBefore(checkInDate)) {
             throw new IllegalArgumentException("Check-out date cannot be before check-in date");
         }
 
         // Check room availability
-        if (!isRoomAvailable(request.getRoomId(), LocalDateTime.parse(request.getCheckInDate()), LocalDateTime.parse(request.getCheckOutDate()))) {
+        if (!isRoomAvailable(request.getRoomId(), checkInDate, checkOutDate)) {
             throw new IllegalArgumentException("Room is not available for the selected dates");
         }
 
-        Optional<RoomDocument> roomDocument = roomRepository.findById(request.getRoomId());
-        assert roomDocument.isPresent();
+        // Fetch room
+        RoomDocument roomDocument = roomRepository.findById(request.getRoomId())
+                .orElseThrow(() -> new IllegalArgumentException("Room not found with ID: " + request.getRoomId()));
+
+        // Fetch student
+        StudentDocument student = studentRepository.findById(request.getStudentId())
+                .orElseThrow(() -> new IllegalArgumentException("Student not found with ID: " + request.getStudentId()));
 
         // Create booking document
         BookingDocument booking = new BookingDocument();
-        booking.setStudentId(request.getStudentId());
-        booking.setRoomId(request.getRoomId());
-        booking.setRoomType(roomDocument.get().getType());
-        booking.setHostelName(roomDocument.get().getHostelName());
-        booking.setCheckInDate(LocalDateTime.parse(request.getCheckInDate()));
-        booking.setCheckOutDate(LocalDateTime.parse(request.getCheckOutDate()));
+        booking.setStudentId(student.getId()); // Internal MongoDB ID
+        booking.setRoomId(roomDocument.getId());
+        booking.setRoomType(roomDocument.getType());
+        booking.setHostelName(roomDocument.getHostelName());
+        booking.setCheckInDate(checkInDate);
+        booking.setCheckOutDate(checkOutDate);
         booking.setBookingStatus(BookingDocument.BookingStatus.PENDING);
         booking.setPaymentStatus(request.getAmountPaid() != null && request.getAmountPaid() > 0
                 ? BookingDocument.PaymentStatus.PAID
                 : BookingDocument.PaymentStatus.UNPAID);
-        booking.setAmountPaid(request.getAmountPaid());
-        booking.setPaymentReference(request.getPaymentReference());
+        booking.setTotalAmount(request.getAmountPaid());
         booking.setCreatedAt(LocalDateTime.now());
         booking.setUpdatedAt(LocalDateTime.now());
 
         BookingDocument savedBooking = bookingRepository.save(booking);
+
+        // Optionally: update student’s bookings list
+        List<BookingDocument> studentBookings = student.getBookings();
+        if (studentBookings != null) {
+            studentBookings.add(savedBooking);
+        } else {
+            student.setBookings(List.of(savedBooking));
+        }
+        student.setUpdatedAt(LocalDateTime.now());
+        studentRepository.save(student);
+
         log.info("Booking created successfully with ID: {}", savedBooking.getId());
 
         return convertToResponse(savedBooking);
     }
+
 
     @Override
     public List<BookingResponse> getAllBookings() {
@@ -148,8 +169,7 @@ public class BookingServiceImpl implements BookingService {
         response.setCheckOutDate(booking.getCheckOutDate());
         response.setBookingStatus(booking.getBookingStatus());
         response.setPaymentStatus(booking.getPaymentStatus());
-        response.setAmountPaid(booking.getAmountPaid());
-        response.setPaymentReference(booking.getPaymentReference());
+        response.setAmountPaid(booking.getTotalAmount());
         response.setCreatedAt(booking.getCreatedAt());
         response.setUpdatedAt(booking.getUpdatedAt());
         return response;

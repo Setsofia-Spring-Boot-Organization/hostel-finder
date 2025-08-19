@@ -3,7 +3,6 @@ package com.backend.hostel_finder.features.booking.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-
 @Data
 public class CreateBookingRequest {
 
@@ -18,6 +17,4 @@ public class CreateBookingRequest {
     private String checkOutDate;
 
     private Double amountPaid;
-
-    private String paymentReference;
 }

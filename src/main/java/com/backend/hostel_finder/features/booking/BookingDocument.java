@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,11 +17,14 @@ public class BookingDocument {
     @MongoId
     private String id;
 
+    @Field("room_id")
+    private String roomId;
+
     @Field("student_id")
     private String studentId;
 
-    @Field("room_id")
-    private String roomId;
+    @Field("room_number")
+    private String roomNumber;
 
     @Field("hostel_name")
     private String hostelName;
@@ -29,29 +32,44 @@ public class BookingDocument {
     @Field("room_type")
     private String roomType;
 
+    @Field("customer_name")
+    private String customerName;
+
+    @Field("customer_email")
+    private String customerEmail;
+
     @Field("check_in_date")
     private LocalDateTime checkInDate;
 
     @Field("check_out_date")
     private LocalDateTime checkOutDate;
 
-    @Field("booking_status")
-    private BookingStatus bookingStatus;
+    @Field("total_amount")
+    private Double totalAmount;
 
     @Field("payment_status")
     private PaymentStatus paymentStatus;
 
-    @Field("amount_paid")
-    private Double amountPaid;
-
-    @Field("payment_reference")
-    private String paymentReference;
+    @Field("booking_status")
+    private BookingStatus bookingStatus;
 
     @Field("created_at")
     private LocalDateTime createdAt;
 
     @Field("updated_at")
     private LocalDateTime updatedAt;
+
+    @Field("amenities")
+    private List<String> amenities;
+
+    @Field("gender")
+    private String gender;
+
+    @Field("capacity")
+    private Integer capacity;
+
+    @Field("special_requests")
+    private String specialRequests;
 
     public enum BookingStatus {
         PENDING, CONFIRMED, CANCELLED, COMPLETED
