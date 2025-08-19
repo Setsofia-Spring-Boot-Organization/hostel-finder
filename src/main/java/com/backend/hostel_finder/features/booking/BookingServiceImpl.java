@@ -57,9 +57,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
         booking.setBookingStatus(BookingDocument.BookingStatus.PENDING);
-        booking.setPaymentStatus(request.getAmountPaid() != null && request.getAmountPaid() > 0
-                ? BookingDocument.PaymentStatus.PAID
-                : BookingDocument.PaymentStatus.UNPAID);
+        booking.setPaymentStatus(BookingDocument.PaymentStatus.UNPAID);
         booking.setTotalAmount(request.getAmountPaid());
         booking.setCreatedAt(LocalDateTime.now());
         booking.setUpdatedAt(LocalDateTime.now());
