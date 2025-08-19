@@ -161,17 +161,40 @@ public class BookingServiceImpl implements BookingService {
     private BookingResponse convertToResponse(BookingDocument booking) {
         BookingResponse response = new BookingResponse();
         response.setId(booking.getId());
-        response.setStudentId(booking.getStudentId());
         response.setRoomId(booking.getRoomId());
         response.setHostelName(booking.getHostelName());
         response.setRoomType(booking.getRoomType());
+
+        // Load Room Details
+        RoomDocument room = roomRepository.findById(booking.getRoomId()).orElse(null);
+        if (room != null) {
+            response.setRoomNumber(room.getNumber());
+            response.setAmenities(room.getAmenities());
+            response.setGender(room.getGender());
+            response.setCapacity(room.getCapacity());
+        }
+
+        // Load Student Details
+        StudentDocument student = studentRepository.findById(booking.getStudentId()).orElse(null);
+        if (student != null) {
+            response.setCustomerName(student.getFullName());
+            response.setCustomerEmail(student.getEmail());
+        }
+
+        // Booking details
         response.setCheckInDate(booking.getCheckInDate());
         response.setCheckOutDate(booking.getCheckOutDate());
         response.setBookingStatus(booking.getBookingStatus());
         response.setPaymentStatus(booking.getPaymentStatus());
-        response.setAmountPaid(booking.getTotalAmount());
+        response.setTotalAmount(booking.getTotalAmount());
+        response.setSpecialRequests(booking.getSpecialRequests());
+
+        // Metadata
+        response.setBookingDate(booking.getCreatedAt()); // same as createdAt
         response.setCreatedAt(booking.getCreatedAt());
         response.setUpdatedAt(booking.getUpdatedAt());
+
         return response;
     }
+
 }

@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends MongoRepository<BookingDocument, String> {
@@ -21,6 +20,4 @@ public interface BookingRepository extends MongoRepository<BookingDocument, Stri
 
     @Query("{ 'room_id': ?0, 'booking_status': { $in: ['CONFIRMED'] } }")
     List<BookingDocument> findConfirmedBookingsByRoomId(String roomId);
-
-    Optional<BookingDocument> findByPaymentReference(String paymentReference);
 }
