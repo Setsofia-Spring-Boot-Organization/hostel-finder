@@ -20,6 +20,7 @@ public class RoomServiceImpl implements RoomService {
         RoomDocument room = new RoomDocument();
         room.setNumber(dto.number());
         room.setType(dto.type());
+        room.setHostelName(dto.hostelName());
         room.setCapacity(dto.capacity());
         room.setPrice(dto.price());
         room.setAmenities(dto.amenities());

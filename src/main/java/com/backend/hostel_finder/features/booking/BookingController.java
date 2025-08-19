@@ -1,8 +1,6 @@
 package com.backend.hostel_finder.features.booking;
 
 import com.backend.hostel_finder.core.Response;
-import com.backend.hostel_finder.features.booking.BookingDocument;
-import com.backend.hostel_finder.features.booking.BookingService;
 import com.backend.hostel_finder.features.booking.daos.BookingResponse;
 import com.backend.hostel_finder.features.booking.dtos.CreateBookingRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/bookings")
+@RequestMapping("/hf/api/v1/bookings")
 @RequiredArgsConstructor
 public class BookingController {
 
@@ -30,11 +28,11 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.CREATED, "Booking created successfully");
         } catch (IllegalArgumentException e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create booking");
         }
@@ -50,7 +48,7 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Bookings retrieved successfully");
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve bookings");
         }
@@ -66,7 +64,7 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Student bookings retrieved successfully");
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve student bookings");
         }
@@ -82,11 +80,11 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Booking retrieved successfully");
         } catch (RuntimeException e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve booking");
         }
@@ -104,11 +102,11 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Booking status updated successfully");
         } catch (RuntimeException e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update booking status");
         }
@@ -126,11 +124,11 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Payment status updated successfully");
         } catch (RuntimeException e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update payment status");
         }
@@ -141,15 +139,15 @@ public class BookingController {
     public ResponseEntity<Response<?>> cancelBooking(@PathVariable String id) {
         try {
             bookingService.cancelBooking(id);
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.OK, "Booking cancelled successfully");
         } catch (RuntimeException e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to cancel booking");
         }
@@ -165,7 +163,7 @@ public class BookingController {
                     .build()
                     .responseEntity(HttpStatus.OK, "Bookings retrieved successfully");
         } catch (Exception e) {
-            return Response.<Object>builder()
+            return Response.builder()
                     .build()
                     .responseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve bookings by status");
         }

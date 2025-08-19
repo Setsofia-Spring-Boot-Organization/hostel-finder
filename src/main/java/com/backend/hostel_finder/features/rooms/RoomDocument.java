@@ -12,6 +12,7 @@ public class RoomDocument {
     @MongoId
     private String id;
     private String number;
+    private String hostelName;
     private String type;
     private int capacity;
     private double price;

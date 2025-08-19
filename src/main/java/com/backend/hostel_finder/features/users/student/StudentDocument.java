@@ -1,5 +1,6 @@
 package com.backend.hostel_finder.features.users.student;
 
+import com.backend.hostel_finder.features.booking.BookingDocument;
 import com.backend.hostel_finder.features.users.roles.UserRoles;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -53,26 +54,11 @@ public class StudentDocument {
     private UserRoles role;
 
     @Field("bookings")
-    private List<Booking> bookings;
+    private List<BookingDocument> bookings;
 
     @Field("created_at")
     private LocalDateTime createdAt;
 
     @Field("updated_at")
     private LocalDateTime updatedAt;
-
-    @Data
-    public static class Booking {
-        @MongoId
-        private String bookingId;
-        private String roomId;
-        private String hostelName;
-        private String roomType;
-        private LocalDateTime checkInDate;
-        private LocalDateTime checkOutDate;
-        private String bookingStatus;   // e.g., Pending, Confirmed, Cancelled
-        private String paymentStatus;   // e.g., Unpaid, Paid
-        private Double amountPaid;
-        private String paymentReference;
-    }
 }

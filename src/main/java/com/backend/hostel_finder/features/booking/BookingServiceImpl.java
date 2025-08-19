@@ -2,12 +2,15 @@ package com.backend.hostel_finder.features.booking;
 
 import com.backend.hostel_finder.features.booking.daos.BookingResponse;
 import com.backend.hostel_finder.features.booking.dtos.CreateBookingRequest;
+import com.backend.hostel_finder.features.rooms.RoomDocument;
+import com.backend.hostel_finder.features.rooms.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,29 +19,33 @@ import java.util.stream.Collectors;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
+    private final RoomRepository roomRepository;
 
     @Override
     public BookingResponse createBooking(CreateBookingRequest request) {
         log.info("Creating booking for student: {}", request.getStudentId());
 
         // Validate dates
-        if (request.getCheckOutDate().isBefore(request.getCheckInDate())) {
+        if (LocalDateTime.parse(request.getCheckOutDate()).isBefore(LocalDateTime.parse(request.getCheckInDate()))) {
             throw new IllegalArgumentException("Check-out date cannot be before check-in date");
         }
 
         // Check room availability
-        if (!isRoomAvailable(request.getRoomId(), request.getCheckInDate(), request.getCheckOutDate())) {
+        if (!isRoomAvailable(request.getRoomId(), LocalDateTime.parse(request.getCheckInDate()), LocalDateTime.parse(request.getCheckOutDate()))) {
             throw new IllegalArgumentException("Room is not available for the selected dates");
         }
+
+        Optional<RoomDocument> roomDocument = roomRepository.findById(request.getRoomId());
+        assert roomDocument.isPresent();
 
         // Create booking document
         BookingDocument booking = new BookingDocument();
         booking.setStudentId(request.getStudentId());
         booking.setRoomId(request.getRoomId());
-        booking.setHostelName(request.getHostelName());
-        booking.setRoomType(request.getRoomType());
-        booking.setCheckInDate(request.getCheckInDate());
-        booking.setCheckOutDate(request.getCheckOutDate());
+        booking.setRoomType(roomDocument.get().getType());
+        booking.setHostelName(roomDocument.get().getHostelName());
+        booking.setCheckInDate(LocalDateTime.parse(request.getCheckInDate()));
+        booking.setCheckOutDate(LocalDateTime.parse(request.getCheckOutDate()));
         booking.setBookingStatus(BookingDocument.BookingStatus.PENDING);
         booking.setPaymentStatus(request.getAmountPaid() != null && request.getAmountPaid() > 0
                 ? BookingDocument.PaymentStatus.PAID
