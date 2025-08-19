@@ -15,8 +15,8 @@ public interface BookingRepository extends MongoRepository<BookingDocument, Stri
 
     List<BookingDocument> findByPaymentStatus(BookingDocument.PaymentStatus status);
 
-    @Query("{ 'student_id': ?0, 'booking_status': { $in: ['PENDING', 'CONFIRMED'] } }")
-    List<BookingDocument> findActiveBookingsByStudentId(String studentId);
+    @Query("{ 'student_id': ?0, 'room_id': ?1, 'booking_status': { $in: ['PENDING', 'CONFIRMED'] } }")
+    List<BookingDocument> findActiveBookingForStudentAndRoom(String studentId, String roomId);
 
     @Query("{ 'room_id': ?0, 'booking_status': { $in: ['CONFIRMED'] } }")
     List<BookingDocument> findConfirmedBookingsByRoomId(String roomId);

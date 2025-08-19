@@ -31,6 +31,14 @@ public class BookingServiceImpl implements BookingService {
         LocalDateTime checkInDate = LocalDateTime.parse(request.getCheckInDate());
         LocalDateTime checkOutDate = LocalDateTime.parse(request.getCheckOutDate());
 
+        // Check if student already booked the same room with active status
+        List<BookingDocument> activeBookings = bookingRepository.findActiveBookingForStudentAndRoom(request.getStudentId(), request.getRoomId());
+
+        if (!activeBookings.isEmpty()) {
+            throw new IllegalStateException("You already have an active booking for this room.");
+        }
+
+
         if (checkOutDate.isBefore(checkInDate)) {
             throw new IllegalArgumentException("Check-out date cannot be before check-in date");
         }
