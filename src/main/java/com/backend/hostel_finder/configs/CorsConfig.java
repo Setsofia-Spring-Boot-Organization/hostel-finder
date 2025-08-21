@@ -10,7 +10,10 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/hf/api/v1/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET", "POST", "DELETE", "PATCH", "UPDATE", "OPTIONS");
+                .allowedOrigins("http://localhost:4200/", "https://hostel-finder-admin.onrender.com")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(false)
+                .maxAge(3600);
     }
 }
