@@ -90,4 +90,31 @@ public class RoommateRequestController {
         }
     }
 
+
+    /**
+     * Get all roommate requests created by a student
+     */
+    @GetMapping("/created/{studentId}")
+    @PreAuthorize("hasRole('USER') or hasRole('STUDENT')")
+    public ResponseEntity<Response<?>> getRequestsCreatedByStudent(@PathVariable String studentId) {
+        List<RoommateRequestDocument> requests = roommateRequestService.getRequestsCreatedByStudent(studentId);
+        return Response.<List<RoommateRequestDocument>>builder()
+                .data(requests)
+                .build()
+                .responseEntity(HttpStatus.OK, "Requests created by student retrieved successfully");
+    }
+
+    /**
+     * Get all roommate requests joined by a student
+     */
+    @GetMapping("/joined/{studentId}")
+    @PreAuthorize("hasRole('USER') or hasRole('STUDENT')")
+    public ResponseEntity<Response<?>> getRequestsJoinedByStudent(@PathVariable String studentId) {
+        List<RoommateRequestDocument> requests = roommateRequestService.getRequestsJoinedByStudent(studentId);
+        return Response.<List<RoommateRequestDocument>>builder()
+                .data(requests)
+                .build()
+                .responseEntity(HttpStatus.OK, "Requests joined by student retrieved successfully");
+    }
+
 }

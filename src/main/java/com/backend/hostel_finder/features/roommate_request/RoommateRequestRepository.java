@@ -9,4 +9,8 @@ public interface RoommateRequestRepository extends MongoRepository<RoommateReque
     List<RoommateRequestDocument> findByOpenTrue(); // fetch all open requests
 
     List<RoommateRequestDocument> findByRoomIdAndOpenTrue(String roomId); // open requests for a room
+
+    List<RoommateRequestDocument> findByRequesterId(String requesterId); // requests created by a student
+
+    List<RoommateRequestDocument> findByJoinedStudentIdsContaining(String studentId); // requests joined by a student
 }

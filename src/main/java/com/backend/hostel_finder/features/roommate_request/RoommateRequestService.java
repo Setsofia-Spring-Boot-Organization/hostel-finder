@@ -12,4 +12,8 @@ public interface RoommateRequestService {
 
     void cancelRequest(String requestId, String studentId);
 
+    List<RoommateRequestDocument> getRequestsCreatedByStudent(String studentId);
+
+    List<RoommateRequestDocument> getRequestsJoinedByStudent(String studentId);
 }
+

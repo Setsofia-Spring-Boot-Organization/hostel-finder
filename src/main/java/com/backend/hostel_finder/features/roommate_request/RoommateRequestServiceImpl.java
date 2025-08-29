@@ -139,4 +139,15 @@ public class RoommateRequestServiceImpl implements RoommateRequestService {
         roommateRequestRepository.delete(request);
     }
 
+
+    @Override
+    public List<RoommateRequestDocument> getRequestsCreatedByStudent(String studentId) {
+        return roommateRequestRepository.findByRequesterId(studentId);
+    }
+
+    @Override
+    public List<RoommateRequestDocument> getRequestsJoinedByStudent(String studentId) {
+        return roommateRequestRepository.findByJoinedStudentIdsContaining(studentId);
+    }
+
 }
