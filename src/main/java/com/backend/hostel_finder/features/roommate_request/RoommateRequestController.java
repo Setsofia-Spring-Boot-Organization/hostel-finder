@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roommate-requests")
+@RequestMapping("/hf/api/v1/roommate-requests")
 @RequiredArgsConstructor
 public class RoommateRequestController {
 
