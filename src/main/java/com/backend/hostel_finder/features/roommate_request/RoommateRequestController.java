@@ -117,4 +117,18 @@ public class RoommateRequestController {
                 .responseEntity(HttpStatus.OK, "Requests joined by student retrieved successfully");
     }
 
+
+    /**
+     * Get all open roommate requests for a specific room
+     */
+    @GetMapping("/room/{roomId}")
+    @PreAuthorize("hasRole('USER') or hasRole('STUDENT')")
+    public ResponseEntity<Response<?>> getRequestsByRoom(@PathVariable String roomId) {
+        List<RoommateRequestDocument> requests = roommateRequestService.getRequestsByRoomId(roomId);
+        return Response.<List<RoommateRequestDocument>>builder()
+                .data(requests)
+                .build()
+                .responseEntity(HttpStatus.OK, "Requests for room retrieved successfully");
+    }
+
 }

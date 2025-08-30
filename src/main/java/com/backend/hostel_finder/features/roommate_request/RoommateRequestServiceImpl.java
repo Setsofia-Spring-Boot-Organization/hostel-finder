@@ -50,6 +50,11 @@ public class RoommateRequestServiceImpl implements RoommateRequestService {
     }
 
     @Override
+    public List<RoommateRequestDocument> getRequestsByRoomId(String roomId) {
+        return roommateRequestRepository.findByRoomIdAndOpenTrue(roomId);
+    }
+
+    @Override
     @Transactional
     public RoommateRequestDocument joinRequest(String requestId, String studentId, String checkInDate, String checkOutDate, Double amountPaid) {
         RoommateRequestDocument request = roommateRequestRepository.findById(requestId)

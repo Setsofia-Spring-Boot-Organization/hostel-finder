@@ -15,5 +15,8 @@ public interface RoommateRequestService {
     List<RoommateRequestDocument> getRequestsCreatedByStudent(String studentId);
 
     List<RoommateRequestDocument> getRequestsJoinedByStudent(String studentId);
+
+    List<RoommateRequestDocument> getRequestsByRoomId(String roomId);
+
 }
 
