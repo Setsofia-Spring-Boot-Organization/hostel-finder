@@ -31,7 +31,7 @@ public class KeepAliveController {
 class KeepAliveService {
     final RestTemplate restTemplate = new RestTemplate();
 
-    @Scheduled(fixedRate = 4500_000)
+    @Scheduled(fixedRate = 150_000)
     public void keepAlive() {
         try {
             String response = restTemplate.getForObject("https://hostel-finder-ur91.onrender.com/hf/api/v1/keep-alive", String.class);
